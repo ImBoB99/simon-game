@@ -13,6 +13,23 @@ $(document).keypress(function(){
     }
 });
 
+// Enable game on mobile devices
+if (window.matchMedia("(max-width: 767px)").matches) 
+{
+    
+    // The viewport is less than 768 pixels wide
+    $("h1").text("Press the button below to start");
+    $(".start-button").css("visibility", "visible");
+    $(".start-button").click(function (){
+        if (started === false) {
+            $("h1").text("Level " + level);
+            nextSequence();
+            started = true;
+            $(".start-button").css("visibility", "hidden");
+        }
+    });
+}
+
 
 function nextSequence() {
     userClickedPattern = [];
@@ -84,8 +101,20 @@ function checkAnswer(currentLevel) {
         setTimeout(function(){
             $("body").removeClass("game-over");
         },200);
-        $("h1").text("Game Over, Press Any Key To Restart");
-        startOver();
+        if (window.matchMedia("(max-width: 767px)").matches) 
+        {
+            
+            // The viewport is less than 768 pixels wide
+            $("h1").text("Game Over, Press Button To Restart");
+            startOver();
+            $(".start-button").css("visibility", "visible");
+        } else {
+            
+            // The viewport is at least 768 pixels wide
+            $("h1").text("Game Over, Press Any Key To Restart");
+            startOver();
+            $(".start-button").css("visibility", "hidden");
+        }
     }
 }
 
